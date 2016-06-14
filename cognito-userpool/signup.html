@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>サインアップ</title>
+  <!-- aws sdk //-->
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.3.8.min.js"></script>
+  <!-- aws cognito sdk  //-->
+  <script src="js/jsbn.js"></script>
+  <script src="js/jsbn2.js"></script>
+  <!-- 
+      下記Issueでアップされているsjcl.jsを利用すること
+      https://github.com/aws/amazon-cognito-identity-js/issues/9
+  -->
+  <script src="js/sjcl.js"></script>
+  <script src="js/moment.js"></script>
+  <script src="dist/aws-cognito-sdk.min.js"></script>
+  <script src="dist/amazon-cognito-identity.min.js"></script>
+  <!-- aws cognito IdentifyID & UserPoolID//-->
+  <script src="js/cognitoid.js"></script>
+  <!-- jquery //-->
+　<script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
+  <!-- bootstrap3 //-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+<form class="form-signin">
+  <h2 class="form-signin-heading">サインアップ</h2>
+  <div id="message" class="alert" style="display:none;"></div>
+  <label for="inputUserName" class="sr-only">ユーザ名</label>
+  <input type="text" id="inputUserName" class="form-control" placeholder="UserName" required autofocus></input>
+  <label for="inputEmail" class="sr-only">メールアドレス</label>
+  <input type="text" id="inputEmail" class="form-control" placeholder="Email" required autofocus></input>
+  <label for="inputPhone" class="sr-only">携帯番号</label>
+  <input type="text" id="inputPhone" class="form-control" placeholder="Phone" required autofocus></input>
+  <label for="inputPassword" class="sr-only">パスワード</label>
+  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required></input>
+  <br/>
+  <input type="button" class="btn btn-lg btn-primary btn-bloc" id="user_add_btn" value="ユーザーを作成する"></input>
+</form>
+</div>
+<script>
+<!--
+//Userをemailとする
+$('#user_add_btn').click(function() {
+  var username = $("#inputUserName").val();
+  var password = $("#inputPassword").val();
+  
+  //e-mailを属性に追加し値を登録
+  var dataEmail = {
+        Name : 'email',
+        Value : $("#inputEmail").val()
+　};
+  var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
+  attributeList.push(attributeEmail);
+
+  //電話番号を属性に追加し、値を登録
+  var dataPhoneNumber = {
+        Name : 'phone_number',
+        Value : $("#inputPhone").val()
+    };   
+  var attributePhoneNumber = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataPhoneNumber);
+  attributeList.push(attributePhoneNumber);
+
+  if(!username || !password) { return false; }
+  userPool.signUp(username, password, attributeList, null, function(err, result){
+      if (err) {
+          console.log(err);
+          message_text = err;
+          message_class = "alert-danger";
+      } else {
+          cognitoUser = result.user;
+          console.log('user name is ' + cognitoUser.getUsername());
+          message_text = cognitoUser.getUsername() + "が作成されました";
+          message_class = "alert-success";
+      }    
+      $("#message").text(message_text);
+      $("#message").addClass(message_class);
+      $('#message').show();
+      setTimeout(function() {
+        $('#message').fadeOut();
+        $("#message").removeClass(message_class);
+      }, 5000);
+  });
+});
+//-->
+</script>
+</body>
+</html>

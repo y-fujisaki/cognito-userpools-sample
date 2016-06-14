@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>ユーザ認証</title>
+  <!-- aws sdk //-->
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.3.8.min.js"></script>
+  <!-- aws cognito sdk //-->
+  <script src="js/jsbn.js"></script>
+  <script src="js/jsbn2.js"></script>
+  <!-- 
+      下記Issueでアップされているsjcl.jsを利用すること
+      https://github.com/aws/amazon-cognito-identity-js/issues/9
+  -->
+  <script src="js/sjcl.js"></script>  
+  <script src="js/moment.js"></script>
+  <script src="dist/aws-cognito-sdk.min.js"></script>
+  <script src="dist/amazon-cognito-identity.min.js"></script>
+  <!-- aws cognito IdentifyID & UserPoolID//-->
+  <script src="js/cognitoid.js"></script> 
+  <!-- jquery //-->
+　<script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
+  <!-- bootstrap3 //-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+<form class="form-signin">
+  <h2 class="form-signin-heading">ユーザ有効化</h2>
+  <div id="message" class="alert" style="display:none;"></div>
+  <label for="inputUserName" class="sr-only">ユーザID</label>
+  <input type="text" id="inputUserName" class="form-control" placeholder="UserName" required autofocus></input>
+  <label for="inputKey" class="sr-only">メールで送付されたキー</label>
+  <input type="text" id="inputKey" class="form-control" placeholder="Key" required></input>
+  <br/>
+  <input type="button" class="btn btn-lg btn-primary btn-bloc" id="user_verify_btn" value="ユーザーを有効化する"></input>
+</form>
+</div>
+<script>
+<!--
+$('#user_verify_btn').click(function() {
+  var username = $("#inputUserName").val()
+  var key = $("#inputKey").val();
+
+  //cognitoのIdentityServiceProvideをuserPoolに指定して認証する
+  var userData = {
+        Username : username,
+        Pool : userPool
+       };
+  var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+
+  if(!username || !key) { return false; }
+
+  cognitoUser.confirmRegistration(key, true, function(err, result) {  
+      if (err) {
+          console.log(err);
+          message_text = err;
+          message_class = "alert-danger";
+      } else {
+          message_text = username + "がレジストされました";
+          message_class = "alert-success";
+      }    
+      $("#message").text(message_text);
+      $("#message").addClass(message_class);
+      $('#message').show();
+      setTimeout(function() {
+        $('#message').fadeOut();
+        $("#message").removeClass(message_class);
+      }, 5000);
+  });
+});
+//-->
+</script>
+</body>
+</html>
