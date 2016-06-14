@@ -3,10 +3,6 @@
 JAWS-UG福岡「JAWS-UG福岡：３度目の濃い目にAWSの話をしてみよう」の発表で使用したデモPGです。
 * https://jaws-ug-kyushu.doorkeeper.jp/events/42203
 
-下記３機能を試すことができます。
-* ユーザ作成（メール、SMSでの書くにコードの送付）
-* 作成ユーザの認証
-* ログイン
 
 **2016/06/14現在のものです** ベータ版を元にしているため、動かなくなる可能性があります。ご容赦ください。
 
@@ -48,25 +44,23 @@ IdentityPoolId: Identity Pool作成後に"Edit identity pool"の画面から確�
 # javascriptでの実行環境をセットアップ
 
 1.  Amazon Cognito AWS SDK for JavaScriptをダウンロードして、配置する
-  * [dist/aws-cognito-sdk.min.js](https://raw.githubusercontent.com/aws/amazon-cognito-identity-js/master/dist/aws-cognito-sdk.min.js)
+  * [aws-cognito-sdk.min.js](https://raw.githubusercontent.com/aws/amazon-cognito-identity-js/master/dist/aws-cognito-sdk.min.js)
   
 2.  Amazon Cognito Identity SDK for JavaScriptをダウンロードして配置する
-  * [dist/amazon-cognito-identity.min.js](https://raw.githubusercontent.com/aws/amazon-cognito-identity-js/master/dist/amazon-cognito-identity.min.js)
+  * [amazon-cognito-identity.min.js](https://raw.githubusercontent.com/aws/amazon-cognito-identity-js/master/dist/amazon-cognito-identity.min.js)
 
 3.  JavaScript BN library for BigInteger computations をダウンロードして配置する
-  * [JavaScript BN library:js/jsbn.js & js/jsbn2.js](http://www-cs-students.stanford.edu/~tjw/jsbn/)
+  * [jsbn.js & jsbn2.js](http://www-cs-students.stanford.edu/~tjw/jsbn/)
 
 4.  Stanford Javascript Crypto Library をダウンロードして配置する
 
   ** 下記URLのものを利用する**
 
-  * [Stanford JavaScript Crypto Library](https://github.com/aws/amazon-cognito-identity-js/files/233157/sjcl.js.zip)
+  * [sjcl.js](https://github.com/aws/amazon-cognito-identity-js/files/233157/sjcl.js.zip)
 
-5. Include Moment.js, a JavaScript library used for date manipulation:
+5.  Moment.jsをダウンロードして配置する
   * [Moment.js](http://momentjs.com/)
 
-6. Optionally, download and include the AWS JavaScript SDK in order to use other AWS services. The SDK is necessary in order to use AWS.CognitoIdentityCredentials:
-  * http://aws.amazon.com/sdk-for-browser/
 
 <pre class="prettyprint">
     &lt;script src="https://sdk.amazonaws.com/js/aws-sdk-2.3.8.min.js"&gt;&lt;/script&gt;
